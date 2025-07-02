@@ -4,6 +4,9 @@
   gather_facts: false
   become: true
 
+  vars:
+    sites: "{{ ssl_target_sites_list.split(',') }}"
+
   tasks:
     - name: Cleanup site ssl backups
       loop: "{{ sites }}"
