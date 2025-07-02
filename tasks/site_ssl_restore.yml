@@ -1,0 +1,21 @@
+---
+- name: Restore site ssl cert
+  notify: Restart nginx
+  ansible.builtin.copy:
+    remote_src: true
+    dest: "{{ letsencrypt_dir }}/certs/fullchain_{{ item }}.pem"
+    src: "{{ letsencrypt_dir }}/backup/certs/fullchain_{{ item }}.pem.bak"
+
+- name: Restore site ssl key
+  notify: Restart nginx
+  ansible.builtin.copy:
+    remote_src: true
+    dest: "{{ letsencrypt_dir }}/keys/{{ item }}.key"
+    src: "{{ letsencrypt_dir }}/backup/keys/{{ item }}.key.bak"
+
+- name: Restore site ssl csr
+  notify: Restart nginx
+  ansible.builtin.copy:
+    remote_src: true
+    dest: "{{ letsencrypt_dir }}/csrs/fullchain_{{ item }}.csr"
+    src: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ item }}.csr.bak"

@@ -1,0 +1,31 @@
+---
+- name: Backup site ssl artifacts
+  hosts: "{{ _host }}"
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Create backup directories in /etc/letsencrypt
+      loop:
+        - backup
+        - backup/certs
+        - backup/keys
+        - backup/csrs 
+      ansible.builtin.file:
+        path: "{{ letsencrypt_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ letsencrypt_dir_owner | default('root') }}"
+        group: "{{ letsencrypt_dir_grp | default('root') }}"
+        mode: "{{ letsencrypt_dir_mode | default('u=rwx,g=x,o=x') }}"
+
+    - name: Restore site ssl artifacts
+      loop: "{{ sites }}"
+      loop_control:
+        label: site
+      ansible.builtin.include_tasks: tasks/site_ssl_restore.yml
+
+  handlers:
+    - name: Restart nginx
+      ansible.builtin.service:
+        name: nginx
+        state: restarted

@@ -1,0 +1,18 @@
+---
+- name: Backup site ssl cert
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ letsencrypt_dir }}/certs/fullchain_{{ item }}.pem"
+    dest: "{{ letsencrypt_dir }}/backup/certs/fullchain_{{ item }}.pem.bak"
+
+- name: Backup site ssl key
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ letsencrypt_dir }}/keys/{{ item }}.key"
+    dest: "{{ letsencrypt_dir }}/backup/keys/{{ item }}.key.bak"
+
+- name: Backup site ssl csr
+  ansible.builtin.copy:
+    remote_src: true
+    src: "{{ letsencrypt_dir }}/csrs/fullchain_{{ item }}.csr"
+    dest: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ item }}.csr.bak"

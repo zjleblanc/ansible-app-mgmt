@@ -1,0 +1,10 @@
+---
+- name: Create TXT record
+  community.general.cloudflare_dns:
+    domain: autodotes.com
+    api_token: "{{ lookup('env', 'CLOUDFLARE_TOKEN') }}"
+    record: "{{ r_acme_challenge.challenge_data[domain_name]['dns-01'].record }}"
+    type: TXT
+    value: "{{ r_acme_challenge.challenge_data[domain_name]['dns-01'].resource_value }}"
+    solo: true
+    state: present

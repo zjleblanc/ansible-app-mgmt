@@ -1,0 +1,32 @@
+---
+- name: Renew acme certs
+  hosts: "{{ _host }}"
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Create required directories in /etc/letsencrypt
+      loop: ['account', 'certs', 'csrs', 'keys']
+      ansible.builtin.file:
+        path: "{{ letsencrypt_dir }}/{{ item }}"
+        state: directory
+        owner: "{{ letsencrypt_dir_owner | default('root') }}"
+        group: "{{ letsencrypt_dir_grp | default('root') }}"
+        mode: "{{ letsencrypt_dir_mode | default('u=rwx,g=x,o=x') }}"
+
+    - name: Install required python packages
+      ansible.builtin.pip:
+        name:
+          - setuptools
+          - cryptography
+        state: present
+
+    - name: Autodotes ACME certs
+      loop: "{{ sites }}"
+      loop_control:
+        loop_var: domain_name
+      ansible.builtin.include_role:
+        name: acme-cert
+      vars:
+        acme_configure_nginx: true
+        acme_challenge_type: dns-01

@@ -1,0 +1,15 @@
+---
+- name: Backup site ssl artifacts
+  hosts: "{{ _host }}"
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Perform health check and validate certificate
+      loop: "{{ sites }}"
+      loop_control:
+        label: site
+      ansible.builtin.uri:
+        url: "https://{{ site }}"
+        method: GET
+        validate_certs: true

@@ -1,0 +1,12 @@
+---
+- name: Cleanup site ssl backups
+  hosts: "{{ _host }}"
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Cleanup site ssl backups
+      loop: "{{ sites }}"
+      loop_control:
+        label: site
+      ansible.builtin.include_tasks: tasks/site_ssl_cleanup.yml
