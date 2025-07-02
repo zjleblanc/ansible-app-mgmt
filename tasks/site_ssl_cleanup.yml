@@ -11,5 +11,5 @@
 
 - name: Cleanup site ssl csr backup
   ansible.builtin.file:
-    path: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ site }}.csr.bak"
+    path: "{{ letsencrypt_dir }}/backup/csrs/{{ site }}.csr.bak"
     state: absent
