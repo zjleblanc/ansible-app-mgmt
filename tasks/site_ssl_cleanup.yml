@@ -1,15 +1,15 @@
 ---
 - name: Cleanup site ssl cert backup
   ansible.builtin.file:
-    path: "{{ letsencrypt_dir }}/backup/certs/fullchain_{{ item }}.pem.bak"
+    path: "{{ letsencrypt_dir }}/backup/certs/fullchain_{{ site }}.pem.bak"
     state: absent
 
 - name: Cleanup site ssl key backup
   ansible.builtin.file:
-    path: "{{ letsencrypt_dir }}/backup/keys/{{ item }}.key.bak"
+    path: "{{ letsencrypt_dir }}/backup/keys/{{ site }}.key.bak"
     state: absent
 
 - name: Cleanup site ssl csr backup
   ansible.builtin.file:
-    path: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ item }}.csr.bak"
+    path: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ site }}.csr.bak"
     state: absent

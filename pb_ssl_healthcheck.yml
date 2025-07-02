@@ -11,7 +11,7 @@
     - name: Perform health check and validate certificate
       loop: "{{ sites }}"
       loop_control:
-        label: site
+        loop_var: site
       ansible.builtin.uri:
         url: "https://{{ site }}"
         method: GET

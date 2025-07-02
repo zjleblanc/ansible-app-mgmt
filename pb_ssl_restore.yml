@@ -24,7 +24,7 @@
     - name: Restore site ssl artifacts
       loop: "{{ sites }}"
       loop_control:
-        label: site
+        loop_var: site
       ansible.builtin.include_tasks: tasks/site_ssl_restore.yml
 
   handlers:

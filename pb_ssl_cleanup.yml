@@ -11,5 +11,5 @@
     - name: Cleanup site ssl backups
       loop: "{{ sites }}"
       loop_control:
-        label: site
+        loop_var: site
       ansible.builtin.include_tasks: tasks/site_ssl_cleanup.yml
