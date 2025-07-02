@@ -14,5 +14,5 @@
 - name: Backup site ssl csr
   ansible.builtin.copy:
     remote_src: true
-    src: "{{ letsencrypt_dir }}/csrs/fullchain_{{ item }}.csr"
-    dest: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ item }}.csr.bak"
+    src: "{{ letsencrypt_dir }}/csrs/{{ item }}.csr"
+    dest: "{{ letsencrypt_dir }}/backup/csrs/{{ item }}.csr.bak"

@@ -4,6 +4,7 @@ acme_directory: https://acme-v02.api.letsencrypt.org/directory
 acme_version: 2
 acme_email: zjleblanc3@gmail.com
 acme_configure_nginx: false
+acme_custom_expiry: "+30d"
 letsencrypt_dir: /etc/letsencrypt
 letsencrypt_keys_dir: /etc/letsencrypt/keys
 letsencrypt_csrs_dir: /etc/letsencrypt/csrs

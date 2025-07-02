@@ -10,8 +10,8 @@
   community.crypto.x509_certificate_info:
     path: "{{ letsencrypt_certs_dir }}/fullchain_{{ domain_name }}.pem"
     valid_at:
-      one_month: "+30d"
+      custom_expiry: "{{ acme_custom_expiry }}"
 
 - name: "Generate cert for {{ domain_name }}"
-  when: not r_crt_check.stat.exists or not r_crt_info.valid_at.one_month|default(false)
+  when: not r_crt_check.stat.exists or not r_crt_info.valid_at.custom_expiry|default(false)
   include_tasks: generate_crt.yml
