@@ -1,5 +1,5 @@
 ---
-- name: Backup site ssl artifacts
+- name: Restore site ssl artifacts from backups
   hosts: "{{ _host }}"
   gather_facts: false
   become: true
@@ -8,19 +8,6 @@
     sites: "{{ ssl_target_sites_list.split(',') }}"
 
   tasks:
-    - name: Create backup directories in /etc/letsencrypt
-      loop:
-        - backup
-        - backup/certs
-        - backup/keys
-        - backup/csrs 
-      ansible.builtin.file:
-        path: "{{ letsencrypt_dir }}/{{ item }}"
-        state: directory
-        owner: "{{ letsencrypt_dir_owner | default('root') }}"
-        group: "{{ letsencrypt_dir_grp | default('root') }}"
-        mode: "{{ letsencrypt_dir_mode | default('u=rwx,g=x,o=x') }}"
-
     - name: Restore site ssl artifacts
       loop: "{{ sites }}"
       loop_control:
