@@ -17,5 +17,5 @@
   notify: Restart nginx
   ansible.builtin.copy:
     remote_src: true
-    dest: "{{ letsencrypt_dir }}/csrs/fullchain_{{ site }}.csr"
-    src: "{{ letsencrypt_dir }}/backup/csrs/fullchain_{{ site }}.csr.bak"
+    dest: "{{ letsencrypt_dir }}/csrs/{{ site }}.csr"
+    src: "{{ letsencrypt_dir }}/backup/csrs/{{ site }}.csr.bak"
